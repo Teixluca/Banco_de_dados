@@ -92,3 +92,4 @@ CREATE TABLE funcionarios(
     cpf_func VARCHAR(15) NOT NULL,
     endereco_func VARCHAR(70) NOT NULL    
 ); 
+
