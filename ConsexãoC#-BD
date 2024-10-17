@@ -39,6 +39,11 @@ namespace MySQL.ConsoleApp
                     case 5:
                         Sair();
                         break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("\n\tOpção inválida!");
+                        break;
+
                 }
             } while (opcao != 5);
         }
@@ -106,6 +111,8 @@ namespace MySQL.ConsoleApp
                     {
                         Console.WriteLine($"{reader["id"],-3} {reader["nome"],-20} {reader["email"],-30}");
                     }
+                    Console.WriteLine("----------------------------------------------");
+                    Console.WriteLine("\n - Precione qualquer tecla voltar as opções");
 
                     Console.ReadKey();
                     Console.Clear();
