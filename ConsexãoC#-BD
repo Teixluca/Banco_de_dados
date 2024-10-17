@@ -1,4 +1,6 @@
+using System;
 using MySql.Data.MySqlClient;
+using System.Threading;
 namespace MySQL.ConsoleApp
 {
     class Program
@@ -10,12 +12,13 @@ namespace MySQL.ConsoleApp
             int opcao;
             do
             {
-                Console.WriteLine("\nEscolha uma opção: ");
+                Console.WriteLine("\n\tEscolha uma opção: \n");
                 Console.WriteLine(" 1. Inserir Usuario");
                 Console.WriteLine(" 2. Ler Usuario");
                 Console.WriteLine(" 3. Atualizar Usuario");
                 Console.WriteLine(" 4. Deletar Usuario");
                 Console.WriteLine(" 5. Sair");
+                Console.Write("\n\tOpção: ");
 
                 opcao = int.Parse(Console.ReadLine());
 
@@ -44,20 +47,46 @@ namespace MySQL.ConsoleApp
             Console.WriteLine("Nome: ");
             string nome = Console.ReadLine();
 
-            Console.WriteLine("Email: " );
+            Console.WriteLine("Email: ");
             string email = Console.ReadLine();
 
-            using (MySqlConnection conn = new MySqlConnection(connectionString)) 
-            { conn.Open();
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
                 string query = "INSERT INTO usuarios(nome, email) VALUES (@nome, @email)";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@nome", nome);
                 cmd.Parameters.AddWithValue("@email", email);
                 cmd.ExecuteNonQuery();
-                Console.WriteLine("Usuario inserido com sucesso!");
-                Console.ReadKey();
+                Console.WriteLine("\n\tUsuario inserido com sucesso!");
+                Thread.Sleep(3000);
+                Console.Clear();
+                //Console.ReadKey();
             }
         }
+
+        /*static void LerUsuario()
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT * FROM usuarios";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"ID: {reader["id"]}, Nome: {reader["nome"]}, \t\tEmail: {reader["email"]}");
+                    }
+
+                    Console.ReadKey();
+                    Console.Clear();
+
+                }
+
+            }
+        }*/
 
         static void LerUsuario()
         {
@@ -69,14 +98,22 @@ namespace MySQL.ConsoleApp
 
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read()) {
-                        Console.WriteLine($"ID: { reader["id"]}, Nome: { reader["nome"]}, Email: { reader["email"]}");
-                    }
-                }
+                    Console.Clear();
+                    Console.WriteLine("\nID\tNome\t\t\tEmail");
+                    Console.WriteLine("----------------------------------------------");
 
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"{reader["id"],-3} {reader["nome"],-20} {reader["email"],-30}");
+                    }
+
+                    Console.ReadKey();
+                    Console.Clear();
+                }
             }
         }
-        
+
+
         static void AtualizarUsuario()
         {
             Console.Write("ID do usuario a ser atualizado: ");
@@ -98,10 +135,11 @@ namespace MySQL.ConsoleApp
                 cmd.Parameters.AddWithValue("@email", email);
 
                 cmd.ExecuteNonQuery();
-                Console.WriteLine("Usuario Atualizado comsucesso");
-
+                Console.WriteLine("\n\tUsuario atualizado com sucesso");
+                Thread.Sleep(3000);
+                Console.Clear();
             }
-          
+
         }
         static void DeletarUsuario()
         {
@@ -116,13 +154,24 @@ namespace MySQL.ConsoleApp
                 cmd.Parameters.AddWithValue("@id", id);
 
                 cmd.ExecuteNonQuery();
-                Console.WriteLine("Usuario deletado com Sucesso! ");
+                Console.WriteLine("\n\tUsuario deletado com Sucesso! ");
+                Thread.Sleep(3000);
+                Console.Clear();
             }
         }
 
         static void Sair()
         {
-            Console.WriteLine("Encerrando o programa...");
+            Console.Clear();
+            Console.WriteLine("\n\tEncerrando o programa.");
+            Thread.Sleep(1000);
+            Console.Clear();
+            Console.WriteLine("\n\tEncerrando o programa..");
+            Thread.Sleep(1000);
+            Console.Clear();
+            Console.WriteLine("\n\tEncerrando o programa...");
+            Thread.Sleep(1000);
+            Console.Clear();
         }
 
     }
